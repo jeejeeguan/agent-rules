@@ -88,7 +88,3 @@ pip-delete-this-directory.txt
 # Backup files
 *.bak
 *.backup
-
-# Claude specific
-.claude/sessions/
-.claude/cache/
