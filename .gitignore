@@ -88,3 +88,6 @@ pip-delete-this-directory.txt
 # Backup files
 *.bak
 *.backup
+
+# WARP configuration
+WARP.md
