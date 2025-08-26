@@ -20,3 +20,7 @@
 - **Git Commits**: Never commit changes unless explicitly requested by the user.
 - **Tool Preference**: Avoid overusing .sh scripts; prefer built-in tools and direct commands.
 - **Modern First Approach**: Don't overcomplicate designs for backward compatibility with legacy frameworks or older versions. Unless users explicitly request compatibility considerations, always architect and code according to the latest requirements and best practices.
+
+## Documentation Standards
+
+- **No Time Estimations**: When creating documentation, never estimate task durations - these are ineffective information. Avoid patterns like "Phase 1: Preparation (1 hour)".
