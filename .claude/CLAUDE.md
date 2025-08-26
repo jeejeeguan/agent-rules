@@ -23,4 +23,4 @@
 
 ## Documentation Standards
 
-- **No Time Estimations**: When creating documentation, never estimate task durations - these are ineffective information. Avoid patterns like "Phase 1: Preparation (1 hour)".
+- **No Time Estimations**: When creating documentation, never estimate task durations - these are ineffective information.
