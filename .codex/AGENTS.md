@@ -28,3 +28,6 @@
 - Do not use escaped “\n” in --body; they render literally.
 - Prefer --body-file to pass Markdown content.
 - Suggested structure: Summary; Impact; Notes; References/Links.
+
+## Quick start
+- Read the CLAUDE.md documentation (if it exists) for a quick overview of the project.
