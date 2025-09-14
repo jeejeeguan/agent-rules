@@ -1,7 +1,7 @@
 # agent-rules（多 Agent 统一规则与同步）
 
 将多种 AI Agent（Claude、Codex 等）的规则集中到单一真源 `AGENT_RULES.md`，
-通过 CI 自动同步到下游文件，并提供 Bash 脚本在本地覆盖更新 `~/.claude`、`~/.codex`、`~/.gemini`。
+通过 CI 自动同步到下游文件，并提供可执行脚本在本地覆盖更新 `~/.claude`、`~/.codex`、`~/.gemini`。
 
 ## 目录结构
 
@@ -25,10 +25,10 @@ git clone https://github.com/jeejeeguan/agent-rules.git
 cd agent-rules
 
 # 同步默认分支（main）
-bash scripts/sync-agent-rules.sh
+./scripts/sync-agent-rules.sh
 
 # 或指定分支
-bash scripts/sync-agent-rules.sh exp/breaking-rewrite
+./scripts/sync-agent-rules.sh exp/breaking-rewrite
 ```
 
 脚本行为：
@@ -50,7 +50,7 @@ bash scripts/sync-agent-rules.sh exp/breaking-rewrite
 Fork 后可通过环境变量覆盖脚本默认仓库：
 
 ```bash
-REPO_OWNER="你的用户名" REPO_NAME="agent-rules" bash scripts/sync-agent-rules.sh main
+REPO_OWNER="你的用户名" REPO_NAME="agent-rules" ./scripts/sync-agent-rules.sh main
 ```
 
 ## 许可证
