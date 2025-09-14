@@ -32,3 +32,6 @@
 ## API Design
 - Naming & Language: Use English for paths, parameters, response keys, and code; use Chinese for comments.
 - HTTP Semantics: Use GET/POST/PUT/PATCH/DELETE appropriately; use standard 2xx/4xx/5xx status codes; avoid overusing 200.
+
+## Quick start
+- Read the CLAUDE.md documentation (if it exists) for a quick overview of the project.
