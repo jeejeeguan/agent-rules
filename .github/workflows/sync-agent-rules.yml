@@ -1,0 +1,39 @@
+name: Sync Agent Rules
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Prepare files
+        run: |
+          mkdir -p .claude .codex
+          cp -f AGENT_RULES.md .claude/CLAUDE.md
+          cp -f AGENT_RULES.md .codex/AGENTS.md
+
+      - name: Commit changes if any
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .claude/CLAUDE.md .codex/AGENTS.md
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "chore(sync): 同步 AGENT_RULES.md 到下游 [skip ci]" \
+                     -m "- 更新 .claude/CLAUDE.md 与 .codex/AGENTS.md" \
+                     -m "- 由 GitHub Actions 自动执行，避免循环触发"
+          git push
+
