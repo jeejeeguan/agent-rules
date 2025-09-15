@@ -1,0 +1,23 @@
+{
+  "name": "agent-rules",
+  "version": "1.0.0",
+  "description": "将多种 AI Agent（Claude、Codex 等）的规则集中到单一真源 `AGENT_RULES.md`， 通过 CI 自动同步到下游文件，并提供可执行脚本在本地覆盖更新 `~/.claude`、`~/.codex`、`~/.gemini`。",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeejeeguan/agent-rules.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jeejeeguan/agent-rules/issues"
+  },
+  "homepage": "https://github.com/jeejeeguan/agent-rules#readme",
+  "devDependencies": {
+    "prettier": "^3.6.2"
+  }
+}
