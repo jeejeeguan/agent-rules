@@ -30,11 +30,12 @@
 - Create a git commit with detailed log using Simplified Chinese (简体中文).
 - **When adding new lines to commit message, use multiple `-m`s**. Example: `git commit -m "feat: 实现自动化部署集成" -m "- description of the feature 1" -m "- description of the feature 2"`.
 
-## PR Description (gh CLI)
+## PR Protocol (gh CLI)
 
 - Do not use escaped “\n” in --body; they render literally.
 - Prefer --body-file to pass Markdown content.
 - Suggested structure: Summary; Impact; Notes; References/Links.
+- IMPORTANT: Never merge pull requests unless explicitly requested by the user. Only create pull requests targeting the designated branch.
 
 ## API Design
 
