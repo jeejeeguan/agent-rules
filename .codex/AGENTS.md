@@ -45,3 +45,12 @@
 ## Quick start
 
 - Read the CLAUDE.md documentation (if it exists) for a quick overview of the project.
+
+## Shell Execution & Timeout Handling
+
+When running shell commands or starting an interactive environment (e.g., bash, sh, zsh), always:
+
+- Prefer non-interactive or one-shot commands whenever possible.
+- Use explicit timeouts or safe-guards (e.g., timeout 60s, set -euo pipefail) to prevent infinite waiting.
+- Never leave long-running processes without clear exit criteria; ensure each session has a termination condition.
+- If a command may block (e.g., tail -f, REPL, or background server), clarify intent with the user and describe the stopping method before execution.
