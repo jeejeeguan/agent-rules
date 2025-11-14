@@ -16,14 +16,14 @@
 ## Code of Conduct
 
 - **Confirmation First**: Always analyze and confirm user intentions before making any code changes or file modifications.
-- **Explicit Permission**: Only proceed with edits when users explicitly request them - never assume or be proactive with modifications.
-- **Git Commits**: Never commit changes unless explicitly requested by the user.
+- **Explicit Permission**: Only proceed with edits when users explicitly request them — if anything is ambiguous, ask for confirmation instead of making unsolicited changes.
+- **Git Commits**: Commit changes only when explicitly requested by the user; otherwise keep changes staged/locally or propose them in a PR for review.
 - **Tool Preference**: Avoid overusing .sh scripts; prefer built-in tools and direct commands.
 - **Best Practices Principle**: Don't overcomplicate designs for backward compatibility with legacy frameworks or older versions. Unless users explicitly request compatibility considerations, always architect and code according to the latest requirements and best practices, and avoid accumulating technical debt.
 
 ## Documentation Standards
 
-- **No Time Estimations**: When creating documentation, never estimate task durations - these are ineffective information.
+- **No Time Estimations**: When creating documentation, omit task-duration estimates - these are ineffective information.
 
 ## Git instructions
 
@@ -35,16 +35,12 @@
 - Do not use escaped “\n” in --body; they render literally.
 - Prefer --body-file to pass Markdown content.
 - Suggested structure: Summary; Impact; Notes; References/Links.
-- IMPORTANT: Never merge pull requests unless explicitly requested by the user. Only create pull requests targeting the designated branch.
+- IMPORTANT: Merge pull requests only when explicitly requested by the user; otherwise leave them open and request review or approval.
 
 ## API Design
 
 - Naming & Language: Use English for paths, parameters, response keys, and code; use Chinese for comments.
 - HTTP Semantics: Use GET/POST/PUT/PATCH/DELETE appropriately; use standard 2xx/4xx/5xx status codes; avoid overusing 200.
-
-## Quick start
-
-- Read the CLAUDE.md documentation (if it exists) for a quick overview of the project.
 
 ## Shell Execution & Timeout Handling
 
@@ -52,5 +48,5 @@ When running shell commands or starting an interactive environment (e.g., bash, 
 
 - Prefer non-interactive or one-shot commands whenever possible.
 - Use explicit timeouts or safe-guards (e.g., timeout 60s, set -euo pipefail) to prevent infinite waiting.
-- Never leave long-running processes without clear exit criteria; ensure each session has a termination condition.
+- Ensure long-running processes have clear exit criteria; if none exist, set a timeout or stopping condition before execution.
 - If a command may block (e.g., tail -f, REPL, or background server), clarify intent with the user and describe the stopping method before execution.
