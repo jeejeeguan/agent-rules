@@ -9,7 +9,8 @@
 .
 ├── AGENT_RULES.md                  # 唯一真源（SSOT）
 ├── .claude/
-│   └── CLAUDE.md                   # 由 CI 复制自 AGENT_RULES.md
+│   ├── CLAUDE.md                   # 由 CI 复制自 AGENT_RULES.md
+│   └── skills/creating-skill/      # 示例 Skill（本地同步时可下发）
 ├── .codex/
 │   └── AGENTS.md                   # 由 CI 复制自 AGENT_RULES.md
 ├── scripts/
@@ -32,7 +33,7 @@ cd agent-rules
 ```
 
 脚本行为：
-- 仅覆盖“仓库中存在的同名文件”；不会删除你本地的多余文件
+- 同步远端文件到本地（含新文件）；不会删除你本地的多余文件
 - 覆盖前自动备份到 `~/.agent-rules-backup/<agent>/...`，备份文件名追加 `_YYYYMMDD_HHMMSS_backup`
 - 支持的本地目录：`~/.claude`、`~/.codex`、`~/.gemini`（存在才处理）
 
