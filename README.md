@@ -33,13 +33,14 @@ cd agent-rules
 ```
 
 脚本行为：
+
 - 同步远端文件到本地（含新文件）；不会删除你本地的多余文件
 - 覆盖前自动备份到 `~/.agent-rules-backup/<agent>/...`，备份文件名追加 `_YYYYMMDD_HHMMSS_backup`
 - 支持的本地目录：`~/.claude`、`~/.codex`、`~/.gemini`（存在才处理）
 
 依赖：`curl`、`tar`（macOS 和 Linux 默认可用）。
 
-## CI 自动同步（SSOT）
+## CI 自动同步
 
 - 当 `main` 分支有 push（包含合并 PR）时，CI 将：
   - 将 `AGENT_RULES.md` 复制到 `.claude/CLAUDE.md` 与 `.codex/AGENTS.md`
@@ -53,7 +54,3 @@ Fork 后可通过环境变量覆盖脚本默认仓库：
 ```bash
 REPO_OWNER="你的用户名" REPO_NAME="agent-rules" ./scripts/sync-agent-rules.sh main
 ```
-
-## 许可证
-
-MIT，见 [LICENSE](LICENSE)。

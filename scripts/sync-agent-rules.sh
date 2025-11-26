@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# agent-rules 本地同步脚本（macOS / Linux）
-# 仅覆盖同名文件；不删除本地多余文件。
-# 备份到 ~/.agent-rules-backup/<agent>/...，并在备份文件名追加 _YYYYMMDD_HHMMSS_backup 后缀。
-
 REPO_OWNER=${REPO_OWNER:-"jeejeeguan"}
 REPO_NAME=${REPO_NAME:-"agent-rules"}
 BRANCH=${1:-${BRANCH:-"main"}}
@@ -18,6 +14,13 @@ timestamp() { date '+%Y%m%d_%H%M%S'; }
 
 echo -e "${COLOR_BLUE}📦 同步分支:${COLOR_RESET} ${BRANCH}"
 echo -e "${COLOR_BLUE}🔗 源仓库:${COLOR_RESET} https://github.com/${REPO_OWNER}/${REPO_NAME}"
+
+echo -e "${COLOR_YELLOW}⚠️  将覆盖 ~/.claude ~/.codex ~/.gemini 中的同名文件（覆盖前会备份到 ~/.agent-rules-backup）${COLOR_RESET}"
+read -r -p "确认从 ${REPO_OWNER}/${REPO_NAME}@${BRANCH} 同步？[y/N] " confirm
+case "${confirm}" in
+  [yY]) ;;
+  *) echo "已取消"; exit 0 ;;
+esac
 
 need_cmd() {
   command -v "$1" >/dev/null 2>&1 || { echo "缺少依赖: $1" >&2; exit 2; }
