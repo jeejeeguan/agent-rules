@@ -52,7 +52,7 @@ BACKUP_ROOT="${HOME_DIR}/.agent-rules-backup"
 TS=$(timestamp)
 
 changed_total=0
-skipped_total=0
+created_total=0
 
 for agent in "${AGENTS[@]}"; do
   local_dir="${HOME_DIR}/.${agent}"
@@ -79,19 +79,18 @@ for agent in "${AGENTS[@]}"; do
       base_name=$(basename "$dst_path")
       backup_path="${BACKUP_ROOT}/${agent}/$(dirname "$rel_path")/${base_name}_${TS}_backup"
       cp -p "$dst_path" "$backup_path"
-
-      mkdir -p "$(dirname "$dst_path")"
-      cp -p "$f" "$dst_path"
       echo -e "${COLOR_GREEN}✓ 覆盖:${COLOR_RESET} ~/.${agent}/${rel_path}  （备份→ ${backup_path})"
-      changed_total=$((changed_total+1))
     else
-      echo -e "${COLOR_YELLOW}↷ 跳过新文件:${COLOR_RESET} ~/.${agent}/${rel_path}（本地不存在同名文件）"
-      skipped_total=$((skipped_total+1))
+      echo -e "${COLOR_GREEN}＋ 新增:${COLOR_RESET} ~/.${agent}/${rel_path}"
+      created_total=$((created_total+1))
     fi
+
+    mkdir -p "$(dirname "$dst_path")"
+    cp -p "$f" "$dst_path"
+    changed_total=$((changed_total+1))
   done < <(find "$remote_dir" -type f -print0)
 done
 
 echo
-echo -e "${COLOR_GREEN}✅ 完成${COLOR_RESET} 覆盖: ${changed_total}，跳过: ${skipped_total}"
+echo -e "${COLOR_GREEN}✅ 完成${COLOR_RESET} 覆盖/新增: ${changed_total}（其中新增 ${created_total}）"
 echo -e "备份目录: ${BACKUP_ROOT}"
-
