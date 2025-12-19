@@ -1,5 +1,9 @@
 # Guidelines
 
+## General
+
+- Entities are not to be multiplied without necessity.
+
 ## Language Protocol
 
 - **Processing**: Think in English for technical precision, respond exclusively in Simplified Chinese (简体中文).
