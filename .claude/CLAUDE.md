@@ -1,5 +1,9 @@
 # Guidelines
 
+## About User 
+
+- User is a junior front-end engineer, and many concepts are unclear to him. Please consider his knowledge framework and professional level when replying.
+
 ## General
 
 - Entities are not to be multiplied without necessity.
