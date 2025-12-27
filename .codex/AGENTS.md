@@ -1,60 +1,82 @@
 # Guidelines
 
-## About User 
+## User Context
 
-- User is a junior front-end engineer, and many concepts are unclear to him. Please consider his knowledge framework and professional level when replying.
+- The user prefers Simplified Chinese for conversation.
+- The user is a junior front-end engineer and an experienced UI designer.
+- Adjust explanations to the user's knowledge level: clear, concrete, and practical.
 
-## General
+## Global Policies
 
-- Entities are not to be multiplied without necessity.
+### Language & Writing Policy (Single Source of Truth)
 
-## Language Protocol
+- Conversation (all assistant replies): **Simplified Chinese (简体中文) only**.
+- Anything that becomes part of a codebase or engineering artifact must be **English only**, including:
+  - Source code, comments, docs
+  - Git commits, PRs, issues, changelogs, release notes
+- Exception: Chinese may exist only inside localization resources (i18n). Developer-facing text remains English.
 
-- **Processing**: Think in English for technical precision, respond exclusively in Simplified Chinese (简体中文).
-- **Consistency**: All user interactions must be in Chinese - no exceptions.
+### Output Style
 
-## Output Protocol
+- Default to concise answers and minimal steps/commands.
+- Expand only when asked, or when risk/ambiguity requires assumptions and verification steps.
 
-- IMPORTANT: Always minimize output tokens - answer concisely without unnecessary preamble or elaboration.
+### Change Safety & Intent
 
-## Verbosity Override
+- If the request is ambiguous, confirm intent and scope before non-trivial changes.
+- Prefer minimal diffs; avoid unrelated refactors unless requested.
 
-- Allow for more detailed responses when the user explicitly asks. For example, if the user says "please explain in detail," provide a longer, more comprehensive answer that includes background context.
+## Workflows
 
-## Code of Conduct
+### Git Workflow (Follow Language & Writing Policy)
 
-- **Confirmation First**: Always analyze and confirm user intentions before making any code changes or file modifications.
-- **Explicit Permission**: Only proceed with edits when users explicitly request them — if anything is ambiguous, ask for confirmation instead of making unsolicited changes.
-- **Git Commits**: Commit changes only when explicitly requested by the user; otherwise keep changes staged/locally or propose them in a PR for review.
-- **Tool Preference**: Avoid overusing .sh scripts; prefer built-in tools and direct commands.
-- **Best Practices Principle**: Don't overcomplicate designs for backward compatibility with legacy frameworks or older versions. Unless users explicitly request compatibility considerations, always architect and code according to the latest requirements and best practices, and avoid accumulating technical debt.
+- Create commits **only when explicitly requested** by the user.
+- Otherwise: keep changes staged locally or provide a patch/diff for review.
+- Prefer Conventional Commits style.
+- When a multi-paragraph message is needed, use multiple `-m` flags:
+  - `git commit -m "feat: add automated deploy pipeline" -m "- Add CI job for image build" -m "- Add SSH-based deploy step"`
 
-## Documentation Standards
+### PR Protocol (gh CLI)
 
-- **No Time Estimations**: When creating documentation, omit task-duration estimates - these are ineffective information.
+- Open PRs only when requested; merge PRs only when explicitly requested.
+- Do not use escaped `\n` in `--body` (they render literally).
+- Prefer `--body-file` to pass Markdown content.
+- Suggested structure:
+  - Summary
+  - Impact
+  - Notes
+  - References / Links
 
-## Git instructions
+## Engineering
 
-- Create a git commit with detailed log using Simplified Chinese (简体中文).
-- **When adding new lines to commit message, use multiple `-m`s**. Example: `git commit -m "feat: 实现自动化部署集成" -m "- description of the feature 1" -m "- description of the feature 2"`.
+### Engineering Principles
 
-## PR Protocol (gh CLI)
+- Avoid inventing extra entities/components/abstractions without necessity.
+- Use modern best practices by default.
+- Add backward compatibility / legacy workarounds only when requested.
 
-- Do not use escaped “\n” in --body; they render literally.
-- Prefer --body-file to pass Markdown content.
-- Suggested structure: Summary; Impact; Notes; References/Links.
-- IMPORTANT: Merge pull requests only when explicitly requested by the user; otherwise leave them open and request review or approval.
+### API Design
 
-## API Design
+- Use stable, readable, ASCII identifiers for:
+  - paths, parameters, response keys, types, identifiers, error codes/messages
+- Follow HTTP semantics:
+  - correct methods (GET/POST/PUT/PATCH/DELETE)
+  - standard status codes (2xx/4xx/5xx)
+  - avoid overusing 200 for errors
 
-- Naming & Language: Use English for paths, parameters, response keys, and code; use Chinese for comments.
-- HTTP Semantics: Use GET/POST/PUT/PATCH/DELETE appropriately; use standard 2xx/4xx/5xx status codes; avoid overusing 200.
+### Documentation Standards
+
+- Include: assumptions, setup, usage, verification steps when relevant.
+- Avoid time/cost estimates unless the user explicitly requests them.
 
 ## Shell Execution & Timeout Handling
 
-When running shell commands or starting an interactive environment (e.g., bash, sh, zsh), always:
+When running shell commands or interactive environments (bash/zsh/sh), always:
 
-- Prefer non-interactive or one-shot commands whenever possible.
-- Use explicit timeouts or safe-guards (e.g., timeout 60s, set -euo pipefail) to prevent infinite waiting.
-- Ensure long-running processes have clear exit criteria; if none exist, set a timeout or stopping condition before execution.
-- If a command may block (e.g., tail -f, REPL, or background server), clarify intent with the user and describe the stopping method before execution.
+- Prefer one-shot, non-interactive commands.
+- Add safeguards to prevent hanging:
+  - use timeouts when appropriate (e.g., `timeout 60s ...`)
+  - use `set -euo pipefail` for scripts/snippets when relevant
+- If a command may block (e.g., `tail -f`, REPL, servers):
+  - explain how to stop it before running (Ctrl+C, kill command, etc.)
+- Avoid overusing `.sh` scripts; prefer direct commands and built-in tooling.
