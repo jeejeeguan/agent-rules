@@ -80,4 +80,3 @@ When running shell commands or interactive environments (bash/zsh/sh), always:
 - If a command may block (e.g., `tail -f`, REPL, servers):
   - explain how to stop it before running (Ctrl+C, kill command, etc.)
 - Avoid overusing `.sh` scripts; prefer direct commands and built-in tooling.
-
