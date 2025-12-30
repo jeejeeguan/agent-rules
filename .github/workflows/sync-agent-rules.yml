@@ -35,8 +35,8 @@ jobs:
             echo "No changes to commit."
             exit 0
           fi
-          git commit -m "chore(sync): 同步 AGENT_RULES.md 到下游 [skip ci]" \
-                     -m "- 更新 .claude/CLAUDE.md、.codex/AGENTS.md、.gemini/GEMINI.md、.crkilo/rules/AGENTS.md、.kilocode/rules/AGENTS.md" \
-                     -m "- 由 GitHub Actions 自动执行，避免循环触发"
+          git commit -m "chore(sync): sync AGENT_RULES.md to agents [skip ci]" \
+                     -m "- Update .claude/CLAUDE.md, .codex/AGENTS.md, .gemini/GEMINI.md, .crkilo/rules/AGENTS.md, .kilocode/rules/AGENTS.md" \
+                     -m "- Auto-executed by GitHub Actions to avoid loop triggering"
           git push
 
