@@ -1,59 +1,71 @@
-# agent-rules（多 Agent 统一规则与同步）
+# agent-rules (Unified Rules & Sync for Multiple Agents)
 
-将多种 AI Agent（Claude、Codex 等）的规则集中到单一真源 `AGENT_RULES.md`，
-通过 CI 自动同步到下游文件，并提供可执行脚本在本地覆盖更新 `~/.claude`、`~/.codex`、`~/.gemini`。
+**[中文版](./README.zh-CN.md)** | English
 
-## 目录结构
+Centralize rules for multiple AI Agents (Claude, Codex, Gemini, Crkilo, Kilocode, etc.) in a single source of truth `AGENT_RULES.md`, automatically sync to each agent's rule files via CI, and provide an executable script to locally update `~/.claude`, `~/.codex`, `~/.gemini`, `~/.crkilo`, `~/.kilocode`.
+
+## Directory Structure
 
 ```
 .
-├── AGENT_RULES.md                  # 唯一真源（SSOT）
+├── AGENT_RULES.md                  # Single Source of Truth (SSOT)
 ├── .claude/
-│   ├── CLAUDE.md                   # 由 CI 复制自 AGENT_RULES.md
-│   └── skills/creating-skill/      # Skill（本地同步时可下发）
+│   ├── CLAUDE.md                   # Copied from AGENT_RULES.md by CI
+│   └── skills/creating-skill/      # Skill (synced locally)
 ├── .codex/
-│   └── AGENTS.md                   # 由 CI 复制自 AGENT_RULES.md
+│   └── AGENTS.md                   # Copied from AGENT_RULES.md by CI
+├── .gemini/
+│   └── GEMINI.md                   # Copied from AGENT_RULES.md by CI
+├── .crkilo/
+│   └── rules/
+│       └── AGENTS.md               # Copied from AGENT_RULES.md by CI
+├── .kilocode/
+│   └── rules/
+│       └── AGENTS.md               # Copied from AGENT_RULES.md by CI
 ├── scripts/
-│   └── sync-agent-rules.sh         # 本地同步脚本
+│   └── sync-agent-rules.sh         # Local sync script
 └── .github/workflows/
-    └── sync-agent-rules.yml        # CI：同步 SSOT 到下游
+    └── sync-agent-rules.yml        # CI: sync AGENT_RULES.md to each agent
 ```
 
-## 快速开始
+## Quick Start
 
 ```bash
 git clone https://github.com/jeejeeguan/agent-rules.git
 cd agent-rules
 
-# 同步默认分支（main）
+# Sync default branch (main)
 ./scripts/sync-agent-rules.sh
 
-# 或指定分支
+# Or specify a branch
 ./scripts/sync-agent-rules.sh exp/breaking-rewrite
 ```
 
-## 脚本行为
+## Script Behavior
 
-核心脚本 `scripts/sync-agent-rules.sh`：
+The core script `scripts/sync-agent-rules.sh` uses a **one-way sync** strategy (remote → local):
 
-- 从 `https://github.com/${REPO_OWNER}/${REPO_NAME}` 下载指定分支 tar 包（默认 `main`，可通过参数或环境变量覆盖），再同步到本地
-- 同步会包含远端新增文件；不会删除你本地的多余文件
-- 覆盖前自动备份到你的本地备份目录 `~/.agent-rules-backup/<agent>/...`，备份文件名追加 `_YYYYMMDD_HHMMSS_backup`
-- 执行前会提示即将使用的仓库与分支并要求 `y/N` 确认，避免误覆盖
-- 支持的 AI Agent 目录：`~/.claude`、`~/.codex`、`~/.gemini`
+- Downloads the specified branch tarball from `https://github.com/${REPO_OWNER}/${REPO_NAME}` (default `main`) and syncs to local
+- Sync behavior (remote → local):
+  - Remote has, local has → Overwrite local file (with backup)
+  - Remote has, local missing → Add to local
+  - Remote missing, local has → No action
+- Automatically backs up to `~/.agent-rules-backup/<agent>/...` before overwriting, backup filename appends `_YYYYMMDD_HHMMSS_backup`
+- Prompts for repo/branch confirmation with `y/N` before execution
+- Supported directories: `~/.claude`, `~/.codex`, `~/.gemini`, `~/.crkilo`, `~/.kilocode`
 
-依赖：`curl`、`tar`（macOS/Linux 默认可用）。
+Dependencies: `curl`, `tar` (available by default on macOS/Linux).
 
-## CI 自动同步
+## CI Auto Sync
 
-- 当 `main` 分支有 push（包含合并 PR）时，CI 将：
-  - 将 `AGENT_RULES.md` 复制到 `.claude/CLAUDE.md` 与 `.codex/AGENTS.md`
-  - 如有变更则自动提交（带 `[skip ci]`，避免循环）
-- 维护规则时，仅编辑根目录的 `AGENT_RULES.md` 即可。
+- When `main` branch receives a push (including PR merges), CI will:
+  - Copy `AGENT_RULES.md` to `.claude/CLAUDE.md`, `.codex/AGENTS.md`, `.gemini/GEMINI.md`, `.crkilo/rules/AGENTS.md`, `.kilocode/rules/AGENTS.md`
+  - Auto-commit if there are changes (with `[skip ci]` to avoid loops)
+- When maintaining rules, only edit `AGENT_RULES.md` in the root directory.
 
-## 自定义
+## Customization
 
-可通过环境变量覆盖脚本默认值：
+Override script defaults via environment variables:
 
-- `BRANCH`：可作为脚本第 1 个参数传入，默认 `main`，可通过参数或环境变量覆盖
-- `REPO_OWNER` / `REPO_NAME`：默认 `jeejeeguan/agent-rules`，可通过参数或环境变量覆盖
+- `BRANCH`: Can be passed as the first script parameter, defaults to `main`, overridable via parameter or env var
+- `REPO_OWNER` / `REPO_NAME`: Defaults to `jeejeeguan/agent-rules`, overridable via parameter or env var

@@ -49,7 +49,7 @@ if [ -z "${SRC_DIR}" ]; then
   exit 3
 fi
 
-AGENTS=(claude codex gemini)
+AGENTS=(claude codex gemini crkilo kilocode)
 HOME_DIR=${HOME}
 BACKUP_ROOT="${HOME_DIR}/.agent-rules-backup"
 TS=$(timestamp)
